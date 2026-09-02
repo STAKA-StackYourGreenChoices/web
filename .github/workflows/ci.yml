@@ -58,7 +58,7 @@ jobs:
         run: pnpm playwright test
         env:
           NEXT_PUBLIC_API_URL: https://api-staging.yourdomain.com
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: playwright-report
