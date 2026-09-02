@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# Fast gate only — anything slow belongs in pre-push.
+set -e
+
+echo "→ lint-staged"
+pnpm lint-staged
+
+echo "→ typecheck"
+pnpm typecheck
+
+echo "→ unit + component tests"
+pnpm test:unit

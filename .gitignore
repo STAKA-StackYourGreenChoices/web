@@ -42,3 +42,9 @@ next-env.d.ts
 
 # ImpactLens index cache
 .impactlens/
+
+# Playwright
+/playwright-report
+/test-results
+/blob-report
+/playwright/.cache
