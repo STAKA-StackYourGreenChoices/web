@@ -25,7 +25,7 @@ jobs:
       name: preview
       url: https://pr-${{ github.event.pull_request.number }}-web.preview.yourdomain.com
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # ── Cross-repo pinning ────────────────────────────────────────────
       # Default: build against the staging API.
