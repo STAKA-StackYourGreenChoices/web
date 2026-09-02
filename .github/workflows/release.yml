@@ -14,6 +14,6 @@ jobs:
     steps:
       # Maintains a release PR with the computed semver bump and changelog.
       # Merging that PR cuts the tag, which is what triggers production.yml.
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5
         with:
           release-type: node
