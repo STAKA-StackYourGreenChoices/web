@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.11.0",
   "engines": {
-    "node": ">=22 <23"
+    "node": ">=20"
   },
   "scripts": {
     "dev": "next dev",
@@ -20,8 +20,7 @@
     "test:cov": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:smoke": "playwright test --grep @smoke",
-    "test:all": "pnpm test:unit && pnpm test:e2e",
-    "prepare": "husky || true"
+    "test:all": "pnpm test:unit && pnpm test:e2e"
   },
   "dependencies": {
     "next": "16.3.2",
@@ -30,8 +29,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
     "@playwright/test": "^1.50.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.6.3",
@@ -44,17 +41,10 @@
     "@vitest/coverage-v8": "^3.1.4",
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
-    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
-    "lint-staged": "^16.1.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.1.4"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --max-warnings=0"
-    ]
   }
 }

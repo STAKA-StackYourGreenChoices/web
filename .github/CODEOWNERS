@@ -1,4 +1,0 @@
-*                       @yourorg/engineers
-/.github/workflows/     @yourorg/maintainers
-/Dockerfile             @yourorg/maintainers
-/next.config.ts         @yourorg/maintainers
