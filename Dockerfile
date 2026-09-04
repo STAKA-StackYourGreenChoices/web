@@ -1,13 +1,13 @@
 # syntax=docker/dockerfile:1.7
 
-FROM node:22-alpine AS deps
+FROM node:26-alpine AS deps
 RUN corepack enable
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm config set store-dir /pnpm/store && pnpm install --frozen-lockfile
 
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 RUN corepack enable
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -27,7 +27,7 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
 
 RUN pnpm build
 
-FROM node:22-alpine AS runtime
+FROM node:26-alpine AS runtime
 RUN apk add --no-cache curl && \
     addgroup -g 1001 -S nodejs && \
     adduser  -u 1001 -S nextjs -G nodejs
