@@ -71,6 +71,8 @@
   --text-3xl--line-height: 1.08;
   --text-4xl: 3.0625rem;
   --text-4xl--line-height: 1.04;
+  --text-5xl: 3.8125rem;
+  --text-5xl--line-height: 1;
 
   /* The only shadow in the system: card stock hanging off a garment. */
   --shadow-tag: 0 1px 0 rgb(26 31 28 / 0.06), 0 14px 28px -12px rgb(26 31 28 / 0.35);
@@ -128,6 +130,9 @@
 
   html {
     @apply font-sans;
+    /* Anchor jumps and keyboard focus land below the sticky header (WCAG 2.4.11). */
+    scroll-padding-top: 5.5rem;
+    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
   }

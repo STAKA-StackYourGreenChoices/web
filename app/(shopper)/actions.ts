@@ -22,7 +22,7 @@ export async function addToWardrobe(gtin: string): Promise<FormState> {
           : "The tag couldn't be added. Try again in a moment.",
     };
   }
-  revalidatePath("/");
+  revalidatePath("/wardrobe");
   redirect(`/tags/${card.id}?added=1`);
 }
 
@@ -45,7 +45,7 @@ export async function verifyByOrder(cardId: string): Promise<FormState> {
     };
   }
   revalidatePath(`/tags/${cardId}`);
-  revalidatePath("/");
+  revalidatePath("/wardrobe");
   return { status: "success", message: "Verified: we found it in your orders." };
 }
 
@@ -79,7 +79,7 @@ export async function uploadReceipt(
       : { status: "error", message };
   }
   revalidatePath(`/tags/${cardId}`);
-  revalidatePath("/");
+  revalidatePath("/wardrobe");
   return { status: "success", message: "Receipt sent. We'll check it soon." };
 }
 

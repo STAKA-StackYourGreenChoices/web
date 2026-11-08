@@ -38,7 +38,7 @@ export async function requireSession(): Promise<SessionClaims> {
 
 export async function requireAdmin(): Promise<SessionClaims> {
   const session = await requireSession();
-  if (session.role !== "ADMIN") redirect("/");
+  if (session.role !== "ADMIN") redirect("/wardrobe");
   return session;
 }
 

@@ -7,7 +7,7 @@ import type { Role } from "./types";
  */
 export function navFor(role: Role): NavItem[] {
   const items: NavItem[] = [
-    { href: "/", label: "Wardrobe" },
+    { href: "/wardrobe", label: "Wardrobe" },
     { href: "/scan", label: "Scan" },
   ];
   if (role === "ADMIN") {

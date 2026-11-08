@@ -14,7 +14,7 @@ export default async function VerifyEmailPage({ searchParams }: PageProps<"/veri
       ) : (
         <p className="mt-4 text-ink-muted">
           This link is missing its confirmation code. Open the link from your email again, or{" "}
-          <Link href="/" className="font-medium text-indigo underline decoration-indigo/40 underline-offset-4 hover:decoration-indigo">
+          <Link href="/wardrobe" className="font-medium text-indigo underline decoration-indigo/40 underline-offset-4 hover:decoration-indigo">
             go to STAKA
           </Link>{" "}
           to send a new one.

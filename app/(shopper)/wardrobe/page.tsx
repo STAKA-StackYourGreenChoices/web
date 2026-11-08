@@ -11,7 +11,7 @@ import { VerifyEmailBanner } from "./verify-email-banner";
 
 export const metadata: Metadata = { title: "My wardrobe" };
 
-export default async function WardrobePage({ searchParams }: PageProps<"/">) {
+export default async function WardrobePage({ searchParams }: PageProps<"/wardrobe">) {
   const [{ welcome }, me, cards] = await Promise.all([
     searchParams,
     api<User>("/auth/me"),

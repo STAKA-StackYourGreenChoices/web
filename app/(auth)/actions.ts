@@ -15,7 +15,7 @@ const newPassword = z
 
 /** Only same-site paths, so a crafted ?next= can't send people elsewhere. */
 function safeNext(value: string | undefined) {
-  return value && value.startsWith("/") && !value.startsWith("//") ? value : "/";
+  return value && value.startsWith("/") && !value.startsWith("//") ? value : "/wardrobe";
 }
 
 export async function login(_: FormState, formData: FormData): Promise<FormState> {
@@ -78,7 +78,7 @@ export async function register(_: FormState, formData: FormData): Promise<FormSt
     }
     return { status: "error", message: messageOf(error), values: keep };
   }
-  redirect("/?welcome=1");
+  redirect("/wardrobe?welcome=1");
 }
 
 export async function requestPasswordReset(_: FormState, formData: FormData): Promise<FormState> {

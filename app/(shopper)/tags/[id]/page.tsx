@@ -32,7 +32,7 @@ export default async function TagPage({ params, searchParams }: PageProps<"/tags
 
   return (
     <>
-      <BackLink href="/">My wardrobe</BackLink>
+      <BackLink href="/wardrobe">My wardrobe</BackLink>
 
       {justAdded && (
         <div role="status" className="mt-2 mb-6 flex items-center gap-2.5 rounded-lg border border-moss/40 bg-moss/10 px-4 py-3 text-forest">

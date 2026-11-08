@@ -94,7 +94,7 @@ export default async function SharedTagPage({ params }: PageProps<"/t/[slug]">) 
                   Scan the barcode on a label to see a piece&apos;s footprint and build a wardrobe you can prove.
                 </p>
                 <Button asChild className="self-start">
-                  <Link href="/register">Create a free account</Link>
+                  <Link href="/register">Create an account</Link>
                 </Button>
               </section>
             </div>

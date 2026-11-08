@@ -74,3 +74,47 @@ desktop                                   phone
 
 ## Avoided on purpose
 Cream with a serif and clay accent. All-caps eyebrows. Middle-dot meta strings. Monospace data labels. Arrows appended to buttons. Identical rounded cards with the same grey shadow.
+
+## Home page (`/`)
+
+**Job:** a first-time visitor understands what STAKA does within one screen and creates an account. Signing in comes second. Signed-in visitors get "Open my wardrobe" instead.
+
+**Research it follows:**
+- [NN/g homepage principles](https://www.nngroup.com/articles/homepage-design-principles/):
+  - logo top-left, and a tagline that says what we do
+  - real examples instead of stock imagery
+  - specific labels, no "Learn more"
+  - no carousels, no animated headline, no false floors
+- **One primary action** per page.
+- **EU EmpCo Directive (in force 27 Sep 2026):** no generic environmental claims ("sustainable", "eco-friendly", "green"). STAKA only states measured figures and says who checked them. That is also the product's point of view.
+- **Performance:** the headline is the largest element on first load and is never animated or hidden.
+- **WCAG 2.2:** targets of at least 24px (we use 44), focus never hidden by the sticky header (`scroll-padding-top`), reduced motion respected.
+
+**The memorable thing:** a clothes rail. A Forest rail runs across the hero, with three real tags hanging from it on strings of different lengths. They swing once on load, like a rack someone just walked past. Elsewhere the rail returns quietly, as the line the "How it works" steps hang from.
+
+```
+desktop
++-------------------------------------------------------------+
+| staka   How it works  For brands  Questions   Sign in [Join] |
++-------------------------------------------------------------+
+| Your clothes, with their          ============rail========= |
+| footprint attached.                  |        |          |   |
+| Scan a label to see a piece's     [tag]    [TAG*]    [tag]  |
+| footprint, prove you bought it,             front           |
+| and keep its tag.                                            |
+| [Create an account]  Sign in                                 |
++-------------------------------------------------------------+
+  How it works   (1)----(2)----(3)   steps hang from a rail
+  What's on a tag   callouts | big tag | callouts
+  [Forest band] No vague green labels. The numbers, and who stands behind them.
+  Share what you can prove   text | link-preview mock
+  For brands    Questions (accordion)    Final call to action    Footer
+```
+
+On phones: the text comes first, then the rail with the front tag, and the two side tags peek in. Steps become a vertical line with the step marks on the left.
+
+**Copy rules:**
+- Sentence case, specific verbs.
+- Numbers keep their units.
+- Never "sustainable" or "eco-friendly" as a claim.
+- No price claims ("free") until pricing is decided.

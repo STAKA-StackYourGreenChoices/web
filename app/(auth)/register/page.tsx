@@ -9,7 +9,7 @@ export default function RegisterPage() {
     <>
       <h1 className="text-2xl font-semibold">Create your STAKA account</h1>
       <p className="mt-2 text-ink-muted">
-        Start a digital tag for every piece you own. It&apos;s free.
+        Start a digital tag for every piece you own.
       </p>
       <RegisterForm />
       <p className="mt-8 text-sm text-ink-muted">

@@ -20,7 +20,7 @@ export function VerifyEmailForm({ token }: { token: string }) {
       <div className="mt-8 flex flex-col gap-5">
         <FormAlert status="success" message="Email confirmed. You're all set." />
         <Button asChild className="w-full">
-          <Link href="/">Go to STAKA</Link>
+          <Link href="/wardrobe">Go to your wardrobe</Link>
         </Button>
       </div>
     );

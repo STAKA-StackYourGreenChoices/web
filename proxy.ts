@@ -52,18 +52,20 @@ export async function proxy(request: NextRequest) {
     GUEST_ONLY.includes(pathname) ||
     pathname === "/reset-password" ||
     pathname === "/verify-email" ||
+    // The home page is for everyone; it adapts when someone is signed in.
+    pathname === "/" ||
     // Shared tags (and their preview images) are open to anyone with the link.
     pathname.startsWith("/t/");
 
   let response: NextResponse;
   if (!claims && !isPublic) {
     const login = new URL("/login", request.url);
-    if (pathname !== "/") login.searchParams.set("next", pathname + search);
+    login.searchParams.set("next", pathname + search);
     response = NextResponse.redirect(login);
   } else if (claims && GUEST_ONLY.includes(pathname)) {
-    response = NextResponse.redirect(new URL("/", request.url));
+    response = NextResponse.redirect(new URL("/wardrobe", request.url));
   } else if (pathname.startsWith("/admin") && claims?.role !== "ADMIN") {
-    response = NextResponse.redirect(new URL("/", request.url));
+    response = NextResponse.redirect(new URL("/wardrobe", request.url));
   } else {
     response = NextResponse.next({ request: { headers: request.headers } });
   }

@@ -22,7 +22,7 @@ export function AppHeader({
       <div className="mx-auto flex h-16 max-w-[1120px] items-center gap-2 px-3 sm:px-6">
         <NavLinks items={nav} mode="sheet" />
         <div className="flex items-center gap-3 md:mr-6">
-          <Wordmark href="/" className="px-1 text-paper" />
+          <Wordmark href="/wardrobe" className="px-1 text-paper" />
         </div>
         <NavLinks items={nav} mode="inline" />
         <div className="ml-auto">
