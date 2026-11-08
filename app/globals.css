@@ -1,26 +1,186 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* STAKA "hang tag" design system. Rationale and rules live in DESIGN.md. */
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Brand palette */
+  --color-paper: var(--paper);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-moss: var(--moss);
+  --color-indigo: var(--indigo);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-wash: var(--wash);
+  --color-tag: var(--tag);
+  --color-rust: var(--rust);
+  --color-ochre: var(--ochre);
+
+  /* shadcn semantic tokens, mapped onto the palette */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-bricolage);
+
+  /* Radius encodes hierarchy: controls 10px, panels 16px, pills full. */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-4xl: 28px;
+
+  /* Type scale: 1.25 ratio from 16px */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.4;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;
+  --text-base--line-height: 1.55;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.4;
+  --text-xl: 1.5625rem;
+  --text-xl--line-height: 1.2;
+  --text-2xl: 1.9375rem;
+  --text-2xl--line-height: 1.12;
+  --text-3xl: 2.4375rem;
+  --text-3xl--line-height: 1.08;
+  --text-4xl: 3.0625rem;
+  --text-4xl--line-height: 1.04;
+  --text-5xl: 3.8125rem;
+  --text-5xl--line-height: 1;
+
+  /* The only shadow in the system: card stock hanging off a garment. */
+  --shadow-tag: 0 1px 0 rgb(26 31 28 / 0.06), 0 14px 28px -12px rgb(26 31 28 / 0.35);
+
+  --animate-tag-swing: tag-swing 1.4s cubic-bezier(0.3, 0.8, 0.3, 1) both;
+
+  @keyframes tag-swing {
+    0% { transform: rotate(-7deg); }
+    35% { transform: rotate(4deg); }
+    65% { transform: rotate(-2deg); }
+    100% { transform: rotate(0deg); }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  --paper: #fbfaf7;
+  --forest: #1f3d2b;
+  --forest-deep: #17301f;
+  --moss: #7c8b4f;
+  --indigo: #2e3f66;
+  --ink: #1a1f1c;
+  --ink-muted: #5c615d; /* 6.1:1 on paper */
+  --line: #e4e3dd;
+  --line-strong: #c9c8c0;
+  --wash: #f1f0eb;
+  --tag: #fffefb;
+  --rust: #a23b2a;
+  --ochre: #8f6312;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--forest);
+  --primary-foreground: var(--paper);
+  --secondary: var(--wash);
+  --secondary-foreground: var(--ink);
+  --muted: var(--wash);
+  --muted-foreground: var(--ink-muted);
+  --accent: #eaedf3; /* indigo wash */
+  --accent-foreground: var(--indigo);
+  --destructive: var(--rust);
+  --border: var(--line);
+  --input: var(--line-strong);
+  --ring: var(--indigo);
+  --radius: 10px;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply font-sans;
+    /* Anchor jumps and keyboard focus land below the sticky header (WCAG 2.4.11). */
+    scroll-padding-top: 5.5rem;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-heading text-ink;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* One focus style everywhere: 2px indigo ring with a 2px paper gap. */
+  :focus-visible {
+    outline: 2px solid var(--indigo);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--moss) 35%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
 }

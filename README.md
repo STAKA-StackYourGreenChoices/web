@@ -42,3 +42,11 @@ have to sit next to `server.js` — the Dockerfile does that, and
 ```bash
 docker build -t web:local --build-arg NEXT_PUBLIC_API_URL=http://localhost:7070 .
 ```
+
+ │    Role     │       Email       │    Password    │
+  ├─────────────┼───────────────────┼────────────────┤
+  │ Admin       │ admin@example.com │ StakaAdmin123! │
+  ├─────────────┼───────────────────┼────────────────┤
+  │ Normal user │ demo@example.com  │ StakaDemo123!  │
+  └─────────────┴───────────────────┴────────────────┘
+

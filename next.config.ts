@@ -10,8 +10,18 @@ const nextConfig: NextConfig = {
   // infer a workspace root. Pin the tracing root to keep tracing deterministic.
   outputFileTracingRoot: path.join(__dirname),
   poweredByHeader: false,
+  // Development only: lets the dev server accept live-reload and asset
+  // requests when the app is opened through an ngrok tunnel.
+  allowedDevOrigins: ["*.ngrok-free.app", "*.ngrok-free.dev", "*.ngrok.app", "*.ngrok.io"],
   // Traefik handles compression at the edge.
   compress: false,
+  experimental: {
+    serverActions: {
+      // Receipts are capped at 5 MB and CSVs at 2 MB by the API; leave room
+      // for multipart overhead.
+      bodySizeLimit: "5.5mb",
+    },
+  },
 };
 
 export default nextConfig;
