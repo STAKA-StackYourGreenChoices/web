@@ -1,79 +1,123 @@
-import Image from "next/image";
-import { OrderSummary } from "@/components/order-summary";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ScanBarcode } from "lucide-react";
+import { HangTag } from "@/components/hang-tag";
+import { OwnershipChip } from "@/components/ownership-chip";
+import { PageHeader } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
+import type { DigitalCard, User } from "@/lib/types";
+import { VerifyEmailBanner } from "./verify-email-banner";
 
-export default function Home() {
+export const metadata: Metadata = { title: "My wardrobe" };
+
+export default async function WardrobePage({ searchParams }: PageProps<"/">) {
+  const [{ welcome }, me, cards] = await Promise.all([
+    searchParams,
+    api<User>("/auth/me"),
+    api<DigitalCard[]>("/digital-cards/mine"),
+  ]);
+  const firstName = me.name.split(" ")[0];
+  const verified = cards.filter((card) => card.ownership.status === "VERIFIED");
+  const waiting = cards.filter((card) => card.ownership.status !== "VERIFIED");
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <OrderSummary
-          subtotal={4500}
-          discount={500}
-          items={[
-            { id: "1", sku: "SKU-ALPHA", quantity: 2, unitPrice: 1500 },
-            { id: "2", sku: "SKU-BETA", quantity: 1, unitPrice: 1500 },
-          ]}
-        />
+    <>
+      {!me.emailVerified && <VerifyEmailBanner email={me.email} justJoined={welcome === "1"} />}
 
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+      <PageHeader
+        title={welcome === "1" ? `Welcome, ${firstName}` : "My wardrobe"}
+        description={
+          cards.length === 0
+            ? "Scan the barcode on a garment's label to keep its footprint on a digital tag."
+            : `${cards.length} ${cards.length === 1 ? "piece" : "pieces"}, ${verified.length} verified.`
+        }
+        actions={
+          cards.length > 0 && (
+            <Button asChild>
+              <Link href="/scan">
+                <ScanBarcode aria-hidden />
+                Scan a product
+              </Link>
+            </Button>
+          )
+        }
+      />
+
+      {cards.length === 0 ? (
+        <section className="mt-10 flex flex-col items-start gap-5 rounded-xl border border-dashed border-line-strong bg-card px-6 py-10 sm:items-center sm:text-center">
+          <ScanBarcode className="size-9 text-moss" strokeWidth={1.5} aria-hidden />
+          <div>
+            <h2 className="text-lg font-semibold">Your wardrobe is empty</h2>
+            <p className="mt-1 max-w-[46ch] text-ink-muted">
+              Point your camera at the barcode on a clothing label, or type the number under it.
+              Each piece you add gets its own tag.
+            </p>
+          </div>
+          <Button asChild size="lg">
+            <Link href="/scan">
+              <ScanBarcode aria-hidden />
+              Scan your first piece
+            </Link>
+          </Button>
+        </section>
+      ) : (
+        <>
+          {verified.length > 0 && (
+            <TagGrid
+              title="Verified"
+              description="Pieces you've proven you own."
+              cards={verified}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          )}
+          {waiting.length > 0 && (
+            <TagGrid
+              title="Waiting for proof"
+              description="Open a tag to match it to an order or upload a receipt."
+              cards={waiting}
+            />
+          )}
+        </>
+      )}
+    </>
+  );
+}
+
+function TagGrid({
+  title,
+  description,
+  cards,
+}: {
+  title: string;
+  description: string;
+  cards: DigitalCard[];
+}) {
+  const headingId = `grid-${title.toLowerCase().replace(/\W+/g, "-")}`;
+  return (
+    <section aria-labelledby={headingId} className="mt-12 first-of-type:mt-10">
+      <h2 id={headingId} className="text-xl font-semibold">
+        {title} <span className="font-sans text-base font-normal text-ink-muted tabular">({cards.length})</span>
+      </h2>
+      <p className="mt-1 text-sm text-ink-muted">{description}</p>
+      <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(232px,1fr))] justify-items-center gap-x-6 gap-y-10">
+        {cards.map((card) => (
+          <li key={card.id} className="flex flex-col items-center gap-3">
+            <Link
+              href={`/tags/${card.id}`}
+              aria-label={`${card.product.name} by ${card.product.brand.name}, open tag`}
+              className="block rounded-lg transition-transform motion-safe:hover:-rotate-1 focus-visible:outline-offset-4"
+            >
+              <HangTag
+                product={card.product}
+                ownerName={card.user.name}
+                ownerVerified={card.ownership.status === "VERIFIED"}
+                size="sm"
+              />
+            </Link>
+            {card.ownership.status !== "VERIFIED" && <OwnershipChip status={card.ownership.status} />}
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
